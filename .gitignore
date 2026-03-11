@@ -1,0 +1,123 @@
+############################
+# Python
+############################
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.pyd
+*.dll
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env/
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# Test / coverage / tooling caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+pytestdebug.log
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+.pyre/
+.tox/
+.nox/
+.cache/
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+############################
+# Node / Frontend (Vite/React)
+############################
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+.pnp.*
+.yarn-integrity
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.eslintcache
+*.tsbuildinfo
+.vite/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+out/
+
+############################
+# Env / secrets
+############################
+.env
+.env.*
+!.env.example
+!.env.template
+
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.csr
+
+############################
+# Databases / runtime data
+############################
+*.sqlite
+*.sqlite3
+*.db
+
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Project-specific (local sqlite + uploads)
+data/*.db
+data/*.sqlite*
+data/media/**
+!data/.gitkeep
+!data/media/**/.gitkeep
+
+############################
+# IDE / OS
+############################
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep empty alembic folder in repo
+!alembic/versions/.gitkeep

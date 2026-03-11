@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+body {
+  background: linear-gradient(180deg, #fafafa 0%, #f4f4f5 100%);
+}
+
+/* React Flow tuning */
+.react-flow__pane {
+  background: transparent;
+}
+
+.react-flow__node.selected > div {
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.react-flow__handle {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 1);
+}
+
+.react-flow__edge-path {
+  stroke: #2563eb;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke-width: 3;
+}
+
+/* Keep edges visible above nodes (our nodes have heavy shadows and can hide paths) */
+.react-flow__edges {
+  z-index: 20;
+}
+
+.react-flow__edge-labels {
+  z-index: 30;
+}
+
+.react-flow__nodes {
+  z-index: 10;
+}
+
+/* Стилизация скроллбара для Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #333 transparent;
+}

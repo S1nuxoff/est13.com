@@ -1,0 +1,58 @@
+[tool.poetry]
+name = "est13-bot"
+version = "0.1.0"
+description = "Telegram bot on aiogram with async DB"
+authors = ["Est13 <dev@est13.local>"]
+readme = "README.md"
+packages = [
+  { include = "est13_bot", from = "src" },
+  { include = "est13_api", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+aiogram = "^3.6.0"
+pydantic = "^2.7.0"
+pydantic-settings = "^2.3.0"
+SQLAlchemy = "^2.0.30"
+alembic = "^1.13.1"
+asyncpg = "^0.29.0"
+aiosqlite = "^0.20.0"
+python-dotenv = "^1.0.1"
+fastapi = "^0.115.0"
+uvicorn = {version = "^0.30.0", extras = ["standard"]}
+python-multipart = "^0.0.9"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.5.0"
+mypy = "^1.10.0"
+pytest = "^8.2.0"
+pytest-asyncio = "^0.23.7"
+types-python-dateutil = "^2.9.0.20240316"
+
+[tool.poetry.scripts]
+est13-bot = "est13_bot.main:main"
+est13-api = "est13_api.main:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = false
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

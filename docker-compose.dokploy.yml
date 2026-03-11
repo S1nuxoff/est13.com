@@ -1,0 +1,92 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-est13}
+      POSTGRES_USER: ${POSTGRES_USER:-est13}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - dokploy-network
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: ${APP_ENV:-prod}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${POSTGRES_USER:-est13}:${POSTGRES_PASSWORD:-change_me}@postgres:5432/${POSTGRES_DB:-est13}}
+      MEDIA_DIR: ${MEDIA_DIR:-/app/data/media}
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      ADMIN_API_TOKEN: ${ADMIN_API_TOKEN:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      WEBAPP_ALLOW_ANON: ${WEBAPP_ALLOW_ANON:-false}
+      RUN_MIGRATIONS: "1"
+    volumes:
+      - media:/app/data
+    expose:
+      - "8992"
+    depends_on:
+      - postgres
+    networks:
+      - dokploy-network
+
+  bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    restart: unless-stopped
+    environment:
+      APP_ENV: ${APP_ENV:-prod}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      DATABASE_URL: ${DATABASE_URL:-postgresql+asyncpg://${POSTGRES_USER:-est13}:${POSTGRES_PASSWORD:-change_me}@postgres:5432/${POSTGRES_DB:-est13}}
+      MEDIA_DIR: ${MEDIA_DIR:-/app/data/media}
+      BOT_TOKEN: ${BOT_TOKEN:-}
+      WEBAPP_URL: ${WEBAPP_URL:-}
+      ADMIN_TG_IDS: ${ADMIN_TG_IDS:-}
+    volumes:
+      - media:/app/data
+    depends_on:
+      - postgres
+      - api
+    networks:
+      - dokploy-network
+
+  admin:
+    build:
+      context: .
+      dockerfile: est13_admin/Dockerfile
+      args:
+        VITE_ADMIN_API_URL: ${VITE_ADMIN_API_URL:-}
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - dokploy-network
+
+  miniapp:
+    build:
+      context: .
+      dockerfile: mini_app/Dockerfile
+      args:
+        VITE_ADMIN_API_URL: ${VITE_ADMIN_API_URL:-}
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks:
+      - dokploy-network
+
+volumes:
+  pgdata: {}
+  media: {}
+
+networks:
+  dokploy-network:
+    external: true
