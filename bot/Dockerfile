@@ -6,12 +6,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-COPY requirements.txt ./requirements.txt
+COPY bot/requirements.txt ./requirements.txt
 RUN python -m pip install --upgrade pip \
     && pip install -r requirements.txt
 
 COPY bot ./bot
-COPY nardo_core ./nardo_core
+COPY est13_core ./est13_core
 
 RUN mkdir -p /app/data /app/data/media
 

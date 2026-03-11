@@ -6,17 +6,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# curl is used for the optional container healthcheck.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./requirements.txt
+COPY api/requirements.txt ./requirements.txt
 RUN python -m pip install --upgrade pip \
     && pip install -r requirements.txt
 
 COPY api ./api
-COPY nardo_core ./nardo_core
+COPY est13_core ./est13_core
 COPY alembic ./alembic
 COPY alembic.ini ./alembic.ini
 
